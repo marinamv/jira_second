@@ -1,0 +1,25 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Jira tests">
+
+    <listeners>
+        <listener class-name="utils.ListenerTest"/>
+    </listeners>
+
+    <parameter name="myParam" value="This is the value for a parameter"/>
+    <parameter name="browserName" value="firefox"/>
+    <parameter name="implicitWaitInSeconds" value="15"/>
+
+    <test name="UI Tests">
+        <groups>
+            <run>
+                <include name="UI"/>
+                <exclude name="SKIP"/>
+            </run>
+        </groups>
+        <classes>
+            <!--class name="ui.WorkflowTest"/-->
+            <class name="ui.CreateIssueTest"/>
+        </classes>
+    </test>
+
+</suite>
