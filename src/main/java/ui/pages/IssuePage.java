@@ -26,13 +26,23 @@ public class IssuePage extends BasePage{
     private By btnBugInTesting = By.xpath("//*[@class='trigger-label'][contains(text(), 'Bug in Testing')]");
     private By btnBugReopened = By.xpath("//*[@class='trigger-label'][contains(text(), 'Bug reopened')]");
     private By btnBugClosed = By.xpath("//*[@class='trigger-label'][contains(text(), 'Bug closed')]");
-    private By statusBug = By.xpath("//*[@id='status-val']//*[text()='Done']");
+    private By statusBugNew = By.xpath("//*[@id='status-val']//*[text()='New']");
+    private By statusBugOpen = By.xpath("//*[@id='status-val']//*[text()='Open']");
+    private By statusBugInProgress = By.xpath("//*[@id='status-val']//*[contains(text(), 'In Progress')]");
+    private By statusBugFixed = By.xpath("//*[@id='status-val']//*[contains(text(), 'Fixed')]");
+    private By statusBugInTesting = By.xpath("//*[@id='status-val']//*[text()='In Testing']");
+    private By statusBugReopened = By.xpath("//*[@id='status-val']//*[text()='Reopened']");
+    private By statusBugDone = By.xpath("//*[@id='status-val']//*[text()='Done']");
     private By btnStoryStartProgress = By.xpath("//*[@class='toolbar-item']//*[text()='Start Progress']");
     private By btnStoryResolveIssue = By.xpath("//*[@class='toolbar-item']//*[text()='Resolve Issue']");
     private By btnStoryReopenIssue = By.xpath("//*[@class='toolbar-item']//*[text()='Reopen Issue']");
     private By btnStoryCloseIssue = By.xpath("//*[@class='toolbar-item']//*[text()='Close Issue']");
     private By btnStoryStopProgress = By.xpath("//*[@class='toolbar-item']//*[text()='Stop Progress']");
-    private By statusStory = By.xpath("//*[@id='status-val']//*[text()='Closed']");
+    private By statusStoryOpen = By.xpath("//*[@id='status-val']//*[text()='Open']");
+    private By statusStoryInProgress = By.xpath("//*[@id='status-val']//*[text()='In Progress']");
+    private By statusStoryResolved = By.xpath("//*[@id='status-val']//*[text()='Resolved']");
+    private By statusStoryReopened = By.xpath("//*[@id='status-val']//*[text()='Reopened']");
+    private By statusStoryClosed = By.xpath("//*[@id='status-val']//*[text()='Closed']");
     private By resolutionDropDownMenu = By.id("resolution");
     private By getBtnStoryResolveIssue = By.id("issue-workflow-transition-submit");
 
@@ -155,9 +165,68 @@ public class IssuePage extends BasePage{
             return false;
         }
     }
+    public boolean isBugStatusNew() {
+        By buttonSelector = statusBugNew;
+        try {
+            driver.findElement(buttonSelector);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean isBugStatusOpen() {
+        By buttonSelector = statusBugOpen;
+        try {
+            driver.findElement(buttonSelector);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean isBugStatusInProgress() {
+        By buttonSelector = statusBugInProgress;
+        try {
+            driver.findElement(buttonSelector);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean isBugStatusFixed() {
+        By buttonSelector = statusBugFixed;
+        try {
+            driver.findElement(buttonSelector);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean isBugStatusReopened() {
+        By buttonSelector = statusBugReopened;
+        try {
+            driver.findElement(buttonSelector);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean isBugStatusInTesting() {
+        By buttonSelector = statusBugInTesting;
+        try {
+            driver.findElement(buttonSelector);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
 
     public boolean isBugStatusDone() {
-        By buttonSelector = statusBug;
+        By buttonSelector = statusBugDone;
         try {
             driver.findElement(buttonSelector);
             return true;
@@ -240,8 +309,48 @@ public class IssuePage extends BasePage{
         }
     }
 
+    public boolean isStoryStatusOpen() {
+        By buttonSelector = statusStoryOpen;
+        try {
+            driver.findElement(buttonSelector);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean isStoryStatusInProgress() {
+        By buttonSelector = statusStoryInProgress;
+        try {
+            driver.findElement(buttonSelector);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean isStoryStatusResolved() {
+        By buttonSelector = statusStoryResolved;
+        try {
+            driver.findElement(buttonSelector);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean isStoryStatusReopened() {
+        By buttonSelector = statusStoryReopened;
+        try {
+            driver.findElement(buttonSelector);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
     public boolean isStoryStatusClosed() {
-        By buttonSelector = statusStory;
+        By buttonSelector = statusStoryClosed;
         try {
             driver.findElement(buttonSelector);
             return true;

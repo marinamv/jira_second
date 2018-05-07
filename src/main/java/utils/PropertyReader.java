@@ -28,9 +28,19 @@ public class PropertyReader {
             }
 
             result = new HashMap();
+            result.put("JiraUrl", propertyFileValues.getProperty("JiraUrl"));
             result.put("username", propertyFileValues.getProperty("username"));
             result.put("password", propertyFileValues.getProperty("password"));
-
+            result.put("project", propertyFileValues.getProperty ("project"));
+            result.put("bugSummary", propertyFileValues.getProperty ("bugSummary"));
+            result.put("storySummary", propertyFileValues.getProperty ("storySummary"));
+            result.put("description", propertyFileValues.getProperty ("description"));
+            result.put("issueTypeBug", propertyFileValues.getProperty ("issueTypeBug"));
+            result.put("issueTypeStory", propertyFileValues.getProperty ("issueTypeStory"));
+            result.put("issuePriority", propertyFileValues.getProperty ("issuePriority"));
+            result.put("issueId", propertyFileValues.getProperty ("issueId"));
+            result.put("fileName", propertyFileValues.getProperty ("fileName"));
+            result.put("pathToFile", propertyFileValues.getProperty ("pathToFile"));
 
         } finally {
             if (input != null) {

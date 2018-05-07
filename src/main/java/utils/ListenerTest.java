@@ -18,7 +18,7 @@ public class ListenerTest implements ITestListener {
     final static Logger logger = Logger.getLogger(ListenerTest.class);
     final static PropertyReader propertyReader = new PropertyReader();
     public static Map<String, String> properties = propertyReader
-            .readProperties("testrun.properties");
+            .readProperties("jira.properties");
 
     public void onTestStart(ITestResult iTestResult) {
         String testCaseName = iTestResult.getName();

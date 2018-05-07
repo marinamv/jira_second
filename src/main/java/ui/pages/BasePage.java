@@ -10,10 +10,9 @@ import utils.ListenerTest;
 public class BasePage {
     protected WebDriver driver;
     final static Logger logger = Logger.getLogger(BasePage.class);
-    protected String baseURL = "http://172.30.27.127:8080";
-
     private int defaultExplicitWaitInSeconds = 10;
     public static int defaultImplicitWaitInSeconds = 10;
+    protected String baseURL = ListenerTest.properties.get("JiraUrl");
     protected String username = ListenerTest.properties.get("username");
     protected String password = ListenerTest.properties.get("password");
 

@@ -3,10 +3,6 @@ package ui.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
-import java.awt.*;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
-
 public class CreateIssuePage extends BasePage{
     private DashboardPage dashboardPage;
 
