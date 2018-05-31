@@ -41,6 +41,7 @@ public class PropertyReader {
             result.put("issueId", propertyFileValues.getProperty ("issueId"));
             result.put("fileName", propertyFileValues.getProperty ("fileName"));
             result.put("pathToFile", propertyFileValues.getProperty ("pathToFile"));
+            result.put("GridURL", propertyFileValues.getProperty("GridURL"));
 
         } finally {
             if (input != null) {

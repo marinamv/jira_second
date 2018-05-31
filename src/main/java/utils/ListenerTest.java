@@ -8,17 +8,15 @@ import org.testng.ITestResult;
 import ui.pages.BasePage;
 import ui.ui_utils.RemoteWebDriverFactory;
 import ui.ui_utils.RemoteDriverManager;
-
-
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class ListenerTest implements ITestListener {
-
     final static Logger logger = Logger.getLogger(ListenerTest.class);
+
     final static PropertyReader propertyReader = new PropertyReader();
-    public static Map<String, String> properties = propertyReader
-            .readProperties("jira.properties");
+    public static Map<String, String> properties = propertyReader.readProperties("jira.properties");
+
 
     public void onTestStart(ITestResult iTestResult) {
         String testCaseName = iTestResult.getName();
@@ -48,11 +46,16 @@ public class ListenerTest implements ITestListener {
 
         // Invoked after the test class is instantiated and before any configuration method is called.
         String[] groups = iTestContext.getIncludedGroups();
+        RemoteWebDriverFactory remoteWebDriverFactory = new RemoteWebDriverFactory();
+        boolean isUseGrid;
         for (String group : groups) {
             if (group.contains("UI")) {
                 String browserName = iTestContext.getCurrentXmlTest().getParameter("browserName");
+                String grid = iTestContext.getCurrentXmlTest().getParameter("isUseGrid");
+                if (grid.contains("true")) isUseGrid = true;
+                else isUseGrid = false;
                 String implicitWaitInSeconds = iTestContext.getCurrentXmlTest().getParameter("implicitWaitInSeconds");
-                WebDriver driver = RemoteWebDriverFactory.createInstance(browserName);
+                WebDriver driver = remoteWebDriverFactory.createInstance(browserName, isUseGrid);
                 RemoteDriverManager.setWebDriver(driver);
                 logger.info("STARTED on browserName=" + browserName);
                 changeImplicitWaitValue(driver, Integer.parseInt(implicitWaitInSeconds));

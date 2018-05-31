@@ -3,20 +3,26 @@ package ui.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import ui.ui_utils.RemoteDriverManager;
 
 
 public class DashboardPage extends BasePage{
-    private String pageURL = baseURL + "/secure/Dashboard.jspa";
-
-    private By createLocator = By.id("create_link");
-    private By issuesLocator = By.id("find_link");
-    private By searchFieldLocator = By.id("quickSearchInput");
-    private By filterReportedByMeLocator = By.id("filter_lnk_reported_lnk");
-    private By reporterFilterByMeLocator = By.xpath("//*[@id='fieldreporter'][contains(text(), 'Current User')]");
+    private String pageURL = JiraURL + "/secure/Dashboard.jspa";
+    @FindBy (id = "create_link")
+    private static WebElement createLocator;
+    @FindBy (id = "find_link")
+    private static WebElement issuesLocator;
+    @FindBy (id = "quickSearchInput")
+    private static WebElement searchFieldLocator;
+    @FindBy (id = "filter_lnk_reported_lnk")
+    private static WebElement filterReportedByMeLocator;
+    @FindBy (xpath = "//*[@id='fieldreporter'][contains(text(), 'Current User')]")
+    private static WebElement reporterFilterByMeLocator;
 
     public DashboardPage() {
-
+        PageFactory.initElements(driver, this);
         this.driver = RemoteDriverManager.getDriver();
     }
 
@@ -34,21 +40,18 @@ public class DashboardPage extends BasePage{
         return this;
     }
     public DashboardPage search(String searchWord) {
-
-        WebElement element = driver.findElement(searchFieldLocator);
-        element.sendKeys(searchWord);
-        element.submit();
+        searchFieldLocator.sendKeys(searchWord);
+        searchFieldLocator.submit();
         return this;
     }
 
-    public boolean isReportedByMeFilter() {
-        By buttonSelector = reporterFilterByMeLocator;
+   public boolean isReportedByMeFilter() {
         try {
-            driver.findElement(buttonSelector);
+            By by = null;
+            reporterFilterByMeLocator.findElement(by);
             return true;
         } catch (NoSuchElementException e) {
             return false;
         }
     }
-
 }

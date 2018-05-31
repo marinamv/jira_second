@@ -12,7 +12,7 @@ public class BasePage {
     final static Logger logger = Logger.getLogger(BasePage.class);
     private int defaultExplicitWaitInSeconds = 10;
     public static int defaultImplicitWaitInSeconds = 10;
-    protected String baseURL = ListenerTest.properties.get("JiraUrl");
+    protected String JiraURL = ListenerTest.properties.get("JiraUrl");
     protected String username = ListenerTest.properties.get("username");
     protected String password = ListenerTest.properties.get("password");
 
@@ -21,71 +21,56 @@ public class BasePage {
         this.driver = RemoteDriverManager.getDriver();
     }
 
-    protected void waitToBePresent(By locator) {
+
+    protected void waitToBePresent(WebElement locator) {
         logger.info("WAIT ELEMENT TO BE PRESENT: " + locator);
         (new WebDriverWait(driver, defaultExplicitWaitInSeconds))
-                .until(ExpectedConditions.presenceOfElementLocated(locator));
+                .until(ExpectedConditions.visibilityOf(locator));
     }
 
-    protected void waitToBePresentAndClick(By locator) {
+    protected void waitToBePresentAndClick(WebElement locator) {
         logger.info("WAIT ELEMENT TO BE PRESENT AND CLICK: " + locator);
         WebElement element = null;
 
         try {
             element = (new WebDriverWait(driver, defaultExplicitWaitInSeconds)).
-                    until(ExpectedConditions.presenceOfElementLocated(locator));
+                    until(ExpectedConditions.elementToBeClickable(locator));
             element.click();
         } catch (StaleElementReferenceException ignored) {
             element = (new WebDriverWait(driver, defaultExplicitWaitInSeconds)).
-                    until(ExpectedConditions.presenceOfElementLocated(locator));
+                    until(ExpectedConditions.elementToBeClickable(locator));
             element.click();
         }
 
     }
-    protected void waitToBePresentAndSendSubmit(By locator) {
+
+     protected void waitToBePresentAndSendSubmit(WebElement locator) {
         logger.info("WAIT ELEMENT TO BE PRESENT AND SUBMIT: " + locator);
-        WebElement element = null;
+         WebElement element;
 
-        try {
-            element = (new WebDriverWait(driver, defaultExplicitWaitInSeconds)).
-                    until(ExpectedConditions.presenceOfElementLocated(locator));
-            element.submit();
-        } catch (StaleElementReferenceException ignored) {
-            element = (new WebDriverWait(driver, defaultExplicitWaitInSeconds)).
-                    until(ExpectedConditions.presenceOfElementLocated(locator));
-            element.submit();
-        }
+         try {
+             element = (new WebDriverWait(driver, defaultExplicitWaitInSeconds)).
+                     until(ExpectedConditions.elementToBeClickable(locator));
+             element.submit();
+         } catch (StaleElementReferenceException ignored) {
+             element = (new WebDriverWait(driver, defaultExplicitWaitInSeconds)).
+                     until(ExpectedConditions.elementToBeClickable(locator));
+             element.submit();
+         }
+     }
 
-    }
-    protected void waitTillBeAbleToClick(By locator) {
-        logger.info("WAIT ELEMENT TO BE CLICKABLE: " + locator);
-
-        WebElement element = null;
-
-        try {
-            element = (new WebDriverWait(driver, defaultExplicitWaitInSeconds)).
-                    until(ExpectedConditions.elementToBeClickable(locator));
-            element.click();
-        } catch (StaleElementReferenceException ignored) {
-            element = (new WebDriverWait(driver, defaultExplicitWaitInSeconds)).
-                    until(ExpectedConditions.elementToBeClickable(locator));
-            element.click();
-        }
-
-    }
-
-    protected void waitToBePresentAndSendKeys(By locator, String keys) {
+    protected void waitToBePresentAndSendKeys(WebElement locator, String keys) {
         logger.info("WAIT ELEMENT TO BE PRESENT AND SEND KEYS: SEND " + keys + " TO " + locator);
 
-        WebElement element = null;
+        WebElement element;
 
         try {
             element = (new WebDriverWait(driver, defaultExplicitWaitInSeconds)).
-                    until(ExpectedConditions.presenceOfElementLocated(locator));
+                    until(ExpectedConditions.elementToBeClickable(locator));
             element.sendKeys(keys);
         } catch (StaleElementReferenceException ignored) {
             element = (new WebDriverWait(driver, defaultExplicitWaitInSeconds)).
-                    until(ExpectedConditions.presenceOfElementLocated(locator));
+                    until(ExpectedConditions.elementToBeClickable(locator));
             element.sendKeys(keys);
         }
     }
@@ -105,7 +90,7 @@ public class BasePage {
 
     }
 
-    protected void SelectDropDownItem(By dropDownSelector, By itemSelector) {
+    protected void SelectDropDownItem(WebElement dropDownSelector, WebElement itemSelector) {
         waitToBePresentAndClick(dropDownSelector);
         waitToBePresentAndClick(itemSelector);
     }
@@ -123,15 +108,17 @@ public class BasePage {
         }
     }
 
-    protected boolean waitToBePresentAndContainsText(By locator, String text) {
+    protected boolean waitToBePresentAndContainsText(WebElement locator, String text) {
         logger.info("WAIT ELEMENT TO BE PRESENT AND CONTAINS TEXT: " + locator);
         WebElement element = null;
 
         try {
             element = (new WebDriverWait(driver, defaultExplicitWaitInSeconds)).
-                    until(ExpectedConditions.presenceOfElementLocated(locator));
+                    until(ExpectedConditions.elementToBeClickable(locator));
 
             String result = element.getText();
+
+            // TODO doe we really need to check text if we alredy found element using xpath and contains?
 
             if (result.contains(text)) {
                 return true;
@@ -142,7 +129,7 @@ public class BasePage {
 
         } catch (StaleElementReferenceException ignored) {
             element = (new WebDriverWait(driver, defaultExplicitWaitInSeconds)).
-                    until(ExpectedConditions.presenceOfElementLocated(locator));
+                    until(ExpectedConditions.elementToBeClickable(locator));
             String result = element.getText();
 
             if (result.contains(text)) {

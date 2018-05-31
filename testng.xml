@@ -7,6 +7,7 @@
 
     <parameter name="myParam" value="This is the value for a parameter"/>
     <parameter name="browserName" value="firefox"/>
+    <parameter name="isUseGrid" value="true"/>
     <parameter name="implicitWaitInSeconds" value="15"/>
 
     <test name="UI Tests">
@@ -17,7 +18,8 @@
             </run>
         </groups>
         <classes>
-            <!--class name="ui.WorkflowTest"/-->
+            <class name="ui.WorkflowBug"/>
+            <class name="ui.WorkflowStory"/>
             <class name="ui.CreateIssueTest"/>
         </classes>
     </test>

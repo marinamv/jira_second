@@ -1,26 +1,39 @@
 package ui.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
 
 public class CreateIssuePage extends BasePage{
     private DashboardPage dashboardPage;
-
-    private By createIssueDialog = By.id("create-issue-dialog");
-    private By successPopUp = By.xpath("//*[contains(@class,'aui-message-success')]");
-    private By newIssueLinkOnSuccessPopup = By.xpath("//a[@class='issue-created-key issue-link']");
-    private By fieldProjectLocator = By.id("project-field");
-    private By issueTypeLocator = By.id("issuetype-field");
-    private By summaryLocator = By.id("summary");
-    private By descriptionFieldLocator = By.id("description");
-    private By descriptionTextModeTab = By.xpath("//ul[@class='tabs-menu']/li[@data-mode='source']");
-    private By priorityFieldDefault = By.id("priority-field");
-    private By assignToMeButtonLocator = By.id("assign-to-me-trigger");
-    private By submitButtonLocator = By.id("create-issue-submit");
+    @FindBy(id = "create-issue-dialog")
+    private WebElement createIssueDialog;
+    @FindBy(xpath = "//*[contains(@class,'aui-message-success')]")
+    private WebElement successPopUp;
+    @FindBy(xpath = "//a[@class='issue-created-key issue-link']")
+    private WebElement newIssueLinkOnSuccessPopup;
+    @FindBy(id = "project-field")
+    private WebElement fieldProjectLocator;
+    @FindBy(id = "issuetype-field")
+    private WebElement issueTypeLocator;
+    @FindBy(id = "summary")
+    private WebElement summaryLocator;
+    @FindBy(id = "description")
+    private WebElement descriptionFieldLocator;
+    @FindBy(xpath = "//ul[@class='tabs-menu']/li[@data-mode='source']")
+    private WebElement descriptionTextModeTab;
+    @FindBy(id = "priority-field")
+    private WebElement priorityFieldDefault;
+    @FindBy(id = "assign-to-me-trigger")
+    private WebElement assignToMeButtonLocator;
+    @FindBy(id = "create-issue-submit")
+    private WebElement submitButtonLocator;
 
 
     public CreateIssuePage(){
-       // this.driver = RemoteDriverManager.getDriver();
+        PageFactory.initElements(driver, this);
         dashboardPage = new DashboardPage();
     }
 
@@ -31,30 +44,41 @@ public class CreateIssuePage extends BasePage{
     }
 
     public CreateIssuePage submitNewTicketAndOpenIt() {
-        waitTillBeAbleToClick(submitButtonLocator);
+        waitToBePresentAndClick(submitButtonLocator);
         waitToBePresent(successPopUp);
         waitToBePresentAndClick(newIssueLinkOnSuccessPopup);
         return this;
     }
 
-    public CreateIssuePage enterProject(String projectId) {
-        waitTillBeAbleToClick(fieldProjectLocator);
-        driver.findElement(fieldProjectLocator).clear();
+    public CreateIssuePage enterProject(String  projectId) {
+        waitToBePresentAndClick(fieldProjectLocator);
+        fieldProjectLocator.clear();
         waitToBePresentAndSendKeys(fieldProjectLocator, projectId);
-        driver.findElement(fieldProjectLocator).sendKeys(Keys.TAB);
+        fieldProjectLocator.sendKeys(Keys.TAB);
         return this;
     }
 
-    public CreateIssuePage enterIssueType(String issueType) {
-        waitTillBeAbleToClick(issueTypeLocator);
-        driver.findElement(issueTypeLocator).clear();
+    public CreateIssuePage enterIssueTypeBug(String issueType) {
+        waitToBePresentAndClick(issueTypeLocator);
+        issueTypeLocator.clear();
+        //issueTypeLocator.sendKeys(issueType);
         waitToBePresentAndSendKeys(issueTypeLocator, issueType);
-        driver.findElement(issueTypeLocator).sendKeys(Keys.TAB);
+        waitToBePresent(issueTypeLocator);
+        issueTypeLocator.sendKeys(Keys.TAB);
+        return this;
+    }
+
+    public CreateIssuePage enterIssueTypeStory(String issueType) {
+        waitToBePresentAndClick(issueTypeLocator);
+        issueTypeLocator.clear();
+        issueTypeLocator.sendKeys(issueType);
+        //waitToBePresentAndSendKeys(issueTypeLocator, issueType);
+        issueTypeLocator.sendKeys(Keys.TAB);
         return this;
     }
 
     public CreateIssuePage fillSummary(String summary) {
-        waitTillBeAbleToClick(summaryLocator);
+        waitToBePresentAndClick(summaryLocator);
         waitToBePresentAndSendKeys(summaryLocator, summary);
         return this;
     }
@@ -70,10 +94,10 @@ public class CreateIssuePage extends BasePage{
     }
 
     public CreateIssuePage selectPriority(String priority) {
-        waitTillBeAbleToClick(priorityFieldDefault);
-        driver.findElement(priorityFieldDefault).clear();
+        waitToBePresentAndClick(priorityFieldDefault);
+        priorityFieldDefault.clear();
         waitToBePresentAndSendKeys(priorityFieldDefault, priority);
-        driver.findElement(priorityFieldDefault).sendKeys(Keys.TAB);
+        priorityFieldDefault.sendKeys(Keys.TAB);
         return this;
     }
 

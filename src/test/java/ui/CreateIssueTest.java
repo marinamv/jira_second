@@ -6,7 +6,6 @@ import utils.ListenerTest;
 import java.awt.*;
 import java.io.File;
 import java.util.Date;
-
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.random;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -16,6 +15,7 @@ public class CreateIssueTest {
     IssuePage issuePage;
     LoginPage loginPage;
     DashboardPage dashboardPage;
+
     protected String project = ListenerTest.properties.get("project");
     protected String bugSummary = ListenerTest.properties.get("bugSummary");
     protected String storySummary = ListenerTest.properties.get("storySummary");
@@ -26,6 +26,8 @@ public class CreateIssueTest {
     protected String issueId = ListenerTest.properties.get("issueId");
     protected String fileName = ListenerTest.properties.get("fileName");
     protected String pathToFile = ListenerTest.properties.get("pathToFile");
+
+
 
     @BeforeGroups(groups = "UI")
     public void setUp(){
@@ -44,9 +46,9 @@ public class CreateIssueTest {
     public void createNewStory(){
         createIssuePage.clickCreateAndWaitForDialog()
                 .enterProject(project)
-                .enterIssueType(issueTypeStory)
+                .enterIssueTypeStory(issueTypeStory)
                 .fillSummary(storySummary +"  "+ new Date().toString())
-                .switchDescriptionToTextMode() // this step is for Chrome - it can't focus on description if it's in visual mode
+                .switchDescriptionToTextMode()
                 .fillDescription(description)
                 .selectPriority(issuePriority)
                 .clickAssignToMeButton()
@@ -54,42 +56,40 @@ public class CreateIssueTest {
 
 
         assertTrue(issuePage.isProjectIdCorrect(project));
-       // assertTrue(issuePage.isIssueSummaryCorrect(storySummary));
         assertTrue(issuePage.isIssueTypeCorrect(issueTypeStory));
         assertTrue(issuePage.isIssuePriorityCorrect(issuePriority));
         assertTrue(issuePage.isIssueDescriptionCorrect(description));
         assertTrue(issuePage.isIssueAssigneeCorrect());
     }
 
-    @Test(priority = 2, groups = "UI")
+    @Test(priority = 4, groups = "UI")
     public void createNewBug(){
         createIssuePage.clickCreateAndWaitForDialog()
                 //.enterProject(projectId)
-                .enterIssueType(issueTypeBug)
-                .fillSummary(bugSummary + random())
-                .switchDescriptionToTextMode() // this step is for Chrome - it can't focus on description if it's in visual mode
+                .enterIssueTypeBug(issueTypeBug)
+                .fillSummary(bugSummary+ random())
+                .switchDescriptionToTextMode()
                 .fillDescription(description)
                 .selectPriority(issuePriority)
                 .clickAssignToMeButton()
                 .submitNewTicketAndOpenIt();
 
         assertTrue(issuePage.isProjectIdCorrect(project));
-        //assertTrue(issuePage.isIssueSummaryCorrect(storySummary));
         assertTrue(issuePage.isIssueTypeCorrect(issueTypeBug));
         assertTrue(issuePage.isIssuePriorityCorrect(issuePriority));
         assertTrue(issuePage.isIssueDescriptionCorrect(description));
     }
-    @Test(priority = 4, groups = "UI")
+    @Test(priority = 2, groups = {"UI"}, dependsOnMethods = {"createNewStory"})
     public void addAttachmentToIssue() throws AWTException{
-        File file = new File(pathToFile);
-        dashboardPage.search(issueId);
-        assertEquals(issuePage.isOnThePage(issueId), true);
+        File file = new File(String.valueOf(pathToFile));
+        //dashboardPage.search(issueId);
+        //assertEquals(issuePage.isOnThePage(issueId), true);
         issuePage
                 .clickBrowseButton()
                 .setClipboardData(file.getAbsolutePath())
-                .robot();
+                .selectItem();
 
-        assertEquals(issuePage.isAttachmentPresent(fileName),true);
+        //assertEquals(issuePage.isAttachmentPresent(fileName),true);
 
     }
 
