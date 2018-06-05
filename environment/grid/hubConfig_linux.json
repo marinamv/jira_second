@@ -1,7 +1,7 @@
 {
 "_comment" : "Configuration for Hub - hubConfig_linux.json",
   "host": "127.0.0.1",
-  "maxSessions": 5,
+  "maxSessions": 15,
   "port": 4444,
   "cleanupCycle": 5000,
   "timeout": 120,

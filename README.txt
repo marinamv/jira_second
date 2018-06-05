@@ -8,5 +8,5 @@
 
 2. Please use 'api.xml' for running REST HTTP API requests
 3. Please use 'parallel_execution.xml' for running tests in parallel
-4.
+4. Please use 'testng.xml' for running UI tests
 
