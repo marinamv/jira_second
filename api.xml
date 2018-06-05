@@ -1,0 +1,20 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Jira API tests">
+
+    <listeners>
+        <listener class-name="api.api_utils.HTTPTestListener"/>
+    </listeners>
+
+    <test name="API Tests">
+        <groups>
+            <run>
+                <include name="API"/>
+                <exclude name="SKIP"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="api.JiraIssueTests"/>
+        </classes>
+    </test>
+
+</suite>

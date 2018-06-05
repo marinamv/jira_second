@@ -37,9 +37,9 @@ public class CreateIssueTest {
         issuePage = new IssuePage();
         loginPage.open();
 
-        assertEquals(loginPage.isOnThePage(), true);
+        assertEquals(loginPage.isOnThePage(), true, "Login Page should be displayed");
         loginPage.enterUsername().enterPassword().clickLogin();
-        assertEquals(dashboardPage.isOnThePage(), true);
+        assertEquals(dashboardPage.isOnThePage(), true, "Dashboard Page should be displayed");
     }
 
     @Test(priority = 1, groups = "UI")
@@ -55,11 +55,11 @@ public class CreateIssueTest {
                 .submitNewTicketAndOpenIt();
 
 
-        assertTrue(issuePage.isProjectIdCorrect(project));
-        assertTrue(issuePage.isIssueTypeCorrect(issueTypeStory));
-        assertTrue(issuePage.isIssuePriorityCorrect(issuePriority));
-        assertTrue(issuePage.isIssueDescriptionCorrect(description));
-        assertTrue(issuePage.isIssueAssigneeCorrect());
+        assertTrue(issuePage.isProjectIdCorrect(project),"Wrong Project");
+        assertTrue(issuePage.isIssueTypeCorrect(issueTypeStory), "Wrong Issue Type");
+        assertTrue(issuePage.isIssuePriorityCorrect(issuePriority), "Wrong Priority");
+        assertTrue(issuePage.isIssueDescriptionCorrect(description), "Wrong description");
+        assertTrue(issuePage.isIssueAssigneeCorrect(), "Issue is unassigned");
     }
 
     @Test(priority = 4, groups = "UI")
@@ -74,12 +74,13 @@ public class CreateIssueTest {
                 .clickAssignToMeButton()
                 .submitNewTicketAndOpenIt();
 
-        assertTrue(issuePage.isProjectIdCorrect(project));
-        assertTrue(issuePage.isIssueTypeCorrect(issueTypeBug));
-        assertTrue(issuePage.isIssuePriorityCorrect(issuePriority));
-        assertTrue(issuePage.isIssueDescriptionCorrect(description));
+        assertTrue(issuePage.isProjectIdCorrect(project),"Wrong Project");
+        assertTrue(issuePage.isIssueTypeCorrect(issueTypeBug), "Wrong Issue Type");
+        assertTrue(issuePage.isIssuePriorityCorrect(issuePriority), "Wrong Priority");
+        assertTrue(issuePage.isIssueDescriptionCorrect(description), "Wrong description");
+        assertTrue(issuePage.isIssueAssigneeCorrect(), "Issue is unassigned");
     }
-    @Test(priority = 2, groups = {"UI"}, dependsOnMethods = {"createNewStory"})
+    @Test(priority = 2, groups = {"SKIP"}, dependsOnMethods = {"createNewStory"})
     public void addAttachmentToIssue() throws AWTException{
         File file = new File(String.valueOf(pathToFile));
         //dashboardPage.search(issueId);
@@ -93,9 +94,9 @@ public class CreateIssueTest {
 
     }
 
-    @Test(priority = 3, groups = "UI")
+    @Test(priority = 3, groups = "SKIP")
     public void issuesReportedByMe() {
         dashboardPage.issuesFilterReportedByMe();
-        assertTrue(dashboardPage.isReportedByMeFilter());
+        assertTrue(dashboardPage.isReportedByMeFilter(),"Reported by me issues aren't filtered");
     }
 }

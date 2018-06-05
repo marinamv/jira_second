@@ -23,9 +23,9 @@ public class WorkflowBug {
         dashboardPage = new DashboardPage();
 
         loginPage.open();
-        assertEquals(loginPage.isOnThePage(), true);
+        assertEquals(loginPage.isOnThePage(), true, "Login Page should be display");
         loginPage.enterUsername().enterPassword().clickLogin();
-        assertEquals(dashboardPage.isOnThePage(), true);
+        assertEquals(dashboardPage.isOnThePage(), true, "Dashboard Page should be displayed");
     }
 
     @Test(priority = 1, groups = "UI")
